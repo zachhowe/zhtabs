@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) ZHTabBar *tabBar;
 @property (nonatomic, strong) NSMutableArray *internalViewControllers;
+@property (nonatomic, strong) NSMutableDictionary *internalTabBarItems;
 
 @end
 
@@ -75,7 +76,8 @@
     {
         if (![self.internalViewControllers isEqual:viewControllers])
         {
-            _internalViewControllers = viewControllers;
+            _internalViewControllers = [NSMutableArray arrayWithArray:viewControllers];
+            self.internalTabBarItems = [NSMutableDictionary dictionaryWithCapacity:[self.internalViewControllers count]];
             
             NSMutableArray *barItems = [[NSMutableArray alloc] init];
             
@@ -232,6 +234,17 @@
     if ([foundItem isKindOfClass:[ZHTabBarItem class]])
     {
         return foundItem;
+    }
+    else
+    {
+        NSString *title = viewController.title;
+        foundItem = self.internalTabBarItems[title];
+        
+        if (nil == foundItem)
+        {
+            foundItem = [[ZHTabBarItem alloc] initWithTitle:title];
+            self.internalTabBarItems[title] = foundItem;
+        }
     }
 
     return nil;
