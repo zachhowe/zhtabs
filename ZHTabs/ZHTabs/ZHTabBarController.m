@@ -151,6 +151,7 @@
                                   self.selectedViewController.view.frame.size.height);
         }
         
+        [self addChildViewController:newSelectedViewController];
         [self.contentView addSubview: newSelectedViewController.view];
     
         UIViewController *previousSelectedViewController = self.selectedViewController;
@@ -170,6 +171,7 @@
                             {
                                 dispatch_async(dispatch_get_main_queue(), ^{
                                     [previousSelectedViewController.view removeFromSuperview];
+                                    [previousSelectedViewController removeFromParentViewController];
                                 });
                             }
                         }];
@@ -177,9 +179,11 @@
     else
     {    
         [self.selectedViewController.view removeFromSuperview];
+        [self.selectedViewController removeFromParentViewController];
         
         _selectedViewController = newSelectedViewController;
         
+        [self addChildViewController:self.selectedViewController];
         [self.contentView addSubview:[self.selectedViewController view]];
         
         self.selectedViewController.view.frame = self.contentView.bounds;
