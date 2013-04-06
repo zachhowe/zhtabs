@@ -231,11 +231,7 @@
         }
     }
 
-    if ([foundItem isKindOfClass:[ZHTabBarItem class]])
-    {
-        return foundItem;
-    }
-    else
+    if (![foundItem isKindOfClass:[ZHTabBarItem class]])
     {
         NSString *title = viewController.title;
         foundItem = self.internalTabBarItems[title];
@@ -247,7 +243,7 @@
         }
     }
 
-    return nil;
+    return foundItem;
 }
 
 #pragma mark - ZMTabBarDelegate methods
