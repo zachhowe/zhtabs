@@ -20,6 +20,11 @@
 
 @implementation ZHTabBarItem
 
++ (instancetype)tabBarItemWithTitle:(NSString *)title
+{
+    return [[self alloc] initWithTitle:title];
+}
+
 - (id)initWithTitle:(NSString *)title
 {
     self = [super initWithFrame:CGRectZero];

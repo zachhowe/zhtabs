@@ -207,8 +207,7 @@
 {
     ZHTabBarItem *foundItem = nil;
 
-    if ([viewController conformsToProtocol:@protocol(ZHTabbedViewControllerDelegate)]
-        || [viewController respondsToSelector:@selector(tabItemForTabBarController:)])
+    if ([viewController respondsToSelector:@selector(tabItemForTabBarController:)])
     {
         UIViewController<ZHTabbedViewControllerDelegate> *tabbedViewController = (UIViewController<ZHTabbedViewControllerDelegate> *)viewController;
         
@@ -222,8 +221,7 @@
         UINavigationController *navigationController = (UINavigationController *)viewController;
         UIViewController *navigationControllerRootViewController = [navigationController.viewControllers objectAtIndex: 0];
         
-        if ([navigationControllerRootViewController conformsToProtocol:@protocol(ZHTabbedViewControllerDelegate)]
-            || [navigationControllerRootViewController respondsToSelector:@selector(tabItemForTabBarController:)])
+        if ([navigationControllerRootViewController respondsToSelector:@selector(tabItemForTabBarController:)])
         {
             UIViewController<ZHTabbedViewControllerDelegate> *tabbedViewController = (UIViewController<ZHTabbedViewControllerDelegate> *)navigationControllerRootViewController;
             
@@ -233,13 +231,27 @@
 
     if (![foundItem isKindOfClass:[ZHTabBarItem class]])
     {
-        NSString *title = viewController.title;
-        foundItem = self.internalTabBarItems[title];
+        // TODO - Improve autocreation of tab bars. Currently, view controllers with the same title may encounter issues if put into the same tab bar controller.
+        //
+        //  Proposed solutions:
+        //   - vc.title + UUID ? definately overkill
+        //   - vc.title.hash as NSNumber ? will this work...?
         
-        if (nil == foundItem)
+#warning Potentially problematic code below. Read TODO message
+        
+        @try
         {
-            foundItem = [[ZHTabBarItem alloc] initWithTitle:title];
-            self.internalTabBarItems[title] = foundItem;
+            NSString *title = viewController.title;
+            foundItem = self.internalTabBarItems[title];
+            
+            if (nil == foundItem)
+            {
+                foundItem = [[ZHTabBarItem alloc] initWithTitle:title];
+                self.internalTabBarItems[title] = foundItem;
+            }
+        }
+        @finally
+        {
         }
     }
 

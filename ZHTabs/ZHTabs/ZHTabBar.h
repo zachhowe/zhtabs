@@ -22,8 +22,4 @@
 @property (nonatomic, weak) id<ZHTabBarDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *items;
 
-// For future use
-@property (nonatomic, strong) UIColor *itemNormalColor;
-@property (nonatomic, strong) UIColor *itemSelectedColor;
-
 @end

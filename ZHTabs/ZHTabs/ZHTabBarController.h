@@ -14,8 +14,6 @@
 
 @protocol ZHTabbedViewControllerDelegate <NSObject>
 
-//@property (nonatomic, readonly) ZHTabBarItem *tabItem;
-
 @required
 - (ZHTabBarItem *)tabItemForTabBarController:(ZHTabBarController *)tabBarController;
 

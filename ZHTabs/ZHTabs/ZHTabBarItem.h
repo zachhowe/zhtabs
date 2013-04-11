@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIImage *selectedImage;
 @property (nonatomic, strong) UIImage *badgeImage;
 
++ (instancetype)tabBarItemWithTitle:(NSString *)title;
+
 - (id)initWithTitle:(NSString *)title;
 
 - (void)setSelected:(BOOL)selected;
